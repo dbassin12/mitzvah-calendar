@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Mitzvah Calendar — Schedule Your Judaism · 5787</title>
+<meta name="description" content="The whole Jewish year on one wall. Every Yom Tov, every parsha, every mitzvah you're committing to — 5787 (Sept 2026 – Sept 2027) at a glance. Pre-order the first printing.">
+<meta property="og:title" content="The Mitzvah Calendar — Schedule Your Judaism">
+<meta property="og:description" content="A big year-at-a-glance wall calendar built around Yiddishkeit. 13 months. 385 days. One wall.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#161d2b">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Frank+Ruhl+Libre:wght@300..900&family=Caveat:wght@400..700&family=Karla:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ───────────────────────── Top bar ───────────────────────── -->
+<header class="topbar">
+  <span class="bsd" aria-hidden="true">בס״ד</span>
+  <a class="brand" href="#top">
+    <span class="brand-mark" aria-hidden="true">✦</span>
+    The Mitzvah Calendar
+    <span class="brand-year">· 5787</span>
+  </a>
+  <nav class="topnav" id="topnav" aria-label="Main">
+    <a href="#calendar">The Calendar</a>
+    <a href="#why">Our Why</a>
+    <a href="#schools">For Schools</a>
+    <a href="#sponsor">Sponsor</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+  <a class="btn btn-small" href="#preorder">Pre-order</a>
+  <button class="navtoggle" id="navtoggle" aria-expanded="false" aria-controls="topnav" aria-label="Menu">
+    <span></span><span></span>
+  </button>
+</header>
+
+<main id="main">
+
+<!-- ───────────────────────── Hero ───────────────────────── -->
+<section class="hero" id="top">
+  <div class="hero-copy">
+    <p class="eyebrow load-1"><span class="rule"></span>The whole year. One wall.</p>
+    <h1 class="load-2">
+      Schedule<br>
+      your <em class="foil">Judaism.</em>
+    </h1>
+    <p class="lede load-3">
+      You plan your work, your dentist, your car lease. The Mitzvah Calendar puts the entire
+      Jewish year — every Yom Tov, every parsha, every mitzvah you're committing to —
+      on one beautiful wall calendar, so your Yiddishkeit gets scheduled <em>first</em>.
+    </p>
+    <div class="hero-cta load-4">
+      <a class="btn btn-gold" href="#preorder">Reserve the first printing</a>
+      <a class="btn btn-ghost" href="#calendar">See the calendar ↓</a>
+    </div>
+    <p class="hero-meta load-5">
+      <strong>5787</strong> · Sept 2026 – Sept 2027 · <span class="nowrap">13 months — it's a leap year</span> · 385 days
+    </p>
+  </div>
+
+  <div class="hero-stage load-poster">
+    <figure class="poster-wrap" role="img" aria-label="Mockup of The Mitzvah Calendar: a large wall poster showing all thirteen months of the Jewish year 5787 with holidays marked in gold and handwritten mitzvah goals.">
+      <div class="tape tape-l" aria-hidden="true"></div>
+      <div class="tape tape-r" aria-hidden="true"></div>
+      <div class="poster" id="poster">
+        <div class="poster-head">
+          <div class="poster-title">
+            <span class="poster-kicker">The Mitzvah Calendar</span>
+            <span class="poster-year">5787</span>
+            <span class="poster-heyear">שנת תשפ״ז</span>
+          </div>
+          <p class="poster-tag">Schedule your Judaism · ראש השנה עד ראש השנה</p>
+        </div>
+        <div class="poster-grid" id="poster-grid"><!-- months injected by script.js --></div>
+        <div class="poster-foot">
+          <span>● Yom Tov</span><span>○ Rosh Chodesh</span><span>▒ Shabbos</span><span>24″ × 36″</span>
+        </div>
+      </div>
+      <div class="annotation anno-1" aria-hidden="true">Uman — Rosh Hashanah ✈</div>
+      <div class="annotation anno-2" aria-hidden="true">finish Mishnayos<br>by Shavuos!</div>
+    </figure>
+  </div>
+</section>
+
+<!-- ───────────────────────── Marquee ───────────────────────── -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marquee-track">
+    <span>Learn Daf Yomi</span><i>✦</i><span>Uman for Rosh Hashanah</span><i>✦</i>
+    <span>Eretz Yisrael</span><i>✦</i><span>Host Shabbos guests</span><i>✦</i>
+    <span>Visit the Ohel</span><i>✦</i><span>Make a siyum</span><i>✦</i>
+    <span>Learn with a chavrusa</span><i>✦</i><span>Shnayim mikra</span><i>✦</i>
+    <span>Bikur cholim</span><i>✦</i><span>Give maaser</span><i>✦</i>
+    <span>Kever Rochel</span><i>✦</i><span>Start a chesed project</span><i>✦</i>
+  </div>
+</div>
+
+<!-- ───────────────────────── Why ───────────────────────── -->
+<section class="why" id="why">
+  <div class="why-inner">
+    <p class="eyebrow reveal"><span class="rule"></span>Our why</p>
+    <blockquote class="pull reveal">
+      “If you spend your whole day scheduling the <em>mundane</em>,
+      you never spend a minute scheduling your <em class="foil">Judaism</em>.”
+    </blockquote>
+    <div class="why-cols reveal">
+      <p>
+        The Mitzvah Calendar started as a voice note between two friends. We noticed that everything
+        ordinary in life gets a date on the wall — meetings, leases, little league — while the things
+        we actually daven for stay vague. <em>“This year I'll get to Eretz Yisrael. This year I'll
+        finish Shas Mishnayos. This year, Uman.”</em> A goal without a date is a wish.
+      </p>
+      <p>
+        So we made the year visible. One large sheet, every week of 5787, with the Yamim Tovim already
+        shining on it — and room beside them to commit, in ink, to the mitzvos you'll actually do.
+        Hang it where the family sees it. Watch a year of Yiddishkeit fill in.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── Product ───────────────────────── -->
+<section class="product" id="calendar">
+  <div class="section-head reveal">
+    <p class="eyebrow"><span class="rule"></span>The calendar</p>
+    <h2>What's on the wall</h2>
+  </div>
+
+  <div class="features">
+    <article class="feature reveal">
+      <span class="f-num">01</span>
+      <h3>The whole year, one view</h3>
+      <p>All of 5787 lined up on a single sheet — and this year that means <strong>13 months</strong>, because 5787 is a leap year with two Adars. 385 days at a glance.</p>
+    </article>
+    <article class="feature reveal">
+      <span class="f-num">02</span>
+      <h3>Hebrew + English dates</h3>
+      <p>Every day carries both calendars, so 15 Nissan and April 22 live on the same square — no more flipping between apps to plan a Yom Tov trip.</p>
+    </article>
+    <article class="feature reveal">
+      <span class="f-num">03</span>
+      <h3>Yamim Tovim pre-marked</h3>
+      <p>Every Yom Tov, fast day, and Rosh Chodesh is printed in gold before it ever reaches your wall. Shabbos columns are shaded the whole year through.</p>
+    </article>
+    <article class="feature reveal">
+      <span class="f-num">04</span>
+      <h3>The parsha, every week</h3>
+      <p>Each week is labeled with its parsha, so the calendar reads like the year actually moves — from Bereishis to V'Zos HaBracha.</p>
+    </article>
+    <article class="feature reveal">
+      <span class="f-num">05</span>
+      <h3>Erev Shabbos cues</h3>
+      <p>A candle-lighting reminder sits on every Friday, and a motzei-Shabbos mark closes every week. The rhythm of the week, printed in.</p>
+    </article>
+    <article class="feature reveal">
+      <span class="f-num">06</span>
+      <h3>Room to commit</h3>
+      <p>Generous write-in space for your own mitzvah goals: the Israel trip, the siyum, the chesed project. It's not a calendar of what happens — it's a calendar of what <em>you'll make happen</em>.</p>
+    </article>
+  </div>
+
+  <aside class="spec reveal">
+    <div class="spec-item"><span class="spec-k">Format</span><span class="spec-v">24″ × 36″ wall poster</span></div>
+    <div class="spec-item"><span class="spec-k">Stock</span><span class="spec-v">Thick matte, pencil-friendly</span></div>
+    <div class="spec-item"><span class="spec-k">Year</span><span class="spec-v">5787 · Sept 2026 – Sept 2027</span></div>
+    <div class="spec-item"><span class="spec-k">Ships</span><span class="spec-v">Rolled in a tube, before Rosh Hashanah</span></div>
+    <div class="spec-item spec-cta"><a class="btn btn-gold" href="#preorder">Reserve yours</a></div>
+  </aside>
+</section>
+
+<!-- ───────────────────────── How it works ───────────────────────── -->
+<section class="how">
+  <div class="section-head reveal">
+    <p class="eyebrow"><span class="rule"></span>How it works</p>
+    <h2>Order → printed → on your wall</h2>
+  </div>
+  <ol class="steps">
+    <li class="step reveal">
+      <span class="step-num">①</span>
+      <h3>You reserve</h3>
+      <p>Join the pre-order list below. No payment now — when the first printing opens, the list orders first at the founding price.</p>
+    </li>
+    <li class="step reveal">
+      <span class="step-num">②</span>
+      <h3>It's printed for you</h3>
+      <p>Every calendar is printed on demand by our print partner the moment an order lands — no warehouse, no leftovers, no waste.</p>
+    </li>
+    <li class="step reveal">
+      <span class="step-num">③</span>
+      <h3>It ships to your door</h3>
+      <p>Rolled, tubed, and shipped direct with tracking emailed to you — in time to hang before Rosh Hashanah 5787.</p>
+    </li>
+  </ol>
+</section>
+
+<!-- ───────────────────────── Schools ───────────────────────── -->
+<section class="schools" id="schools">
+  <div class="schools-inner">
+    <div class="schools-copy reveal">
+      <p class="eyebrow eyebrow-light"><span class="rule"></span>For schools &amp; mosdos</p>
+      <h2>Put the year on every classroom wall.</h2>
+      <p>
+        Imagine every classroom in your school starting Elul with the whole year visible — talmidim
+        marking the Yamim Tovim, counting toward their own siyumim, watching the year of Torah unfold.
+        We offer bulk pricing for day schools, yeshivos, and shuls, and we'll work with you on timing
+        so the calendars arrive before the first day of school.
+      </p>
+      <a class="btn btn-paper" href="mailto:davidbassin12@gmail.com?subject=The%20Mitzvah%20Calendar%20%E2%80%94%20School%20%2F%20bulk%20order%20inquiry&body=School%20or%20organization%3A%0AContact%20name%3A%0AApprox.%20quantity%3A%0ANotes%3A">Inquire about a bulk order</a>
+    </div>
+    <div class="schools-stat reveal" aria-hidden="true">
+      <span class="stat-big">13</span>
+      <span class="stat-label">months of Torah<br>on one wall</span>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── Sponsor ───────────────────────── -->
+<section class="sponsor" id="sponsor">
+  <div class="sponsor-inner reveal">
+    <p class="eyebrow"><span class="rule"></span>Sponsor a wall</p>
+    <h2>One donor can put this in <em class="foil">every classroom.</em></h2>
+    <p>
+      Sponsor a print run for a school, a kollel, or families in your community — with a dedication
+      line printed on every sponsored calendar (<span class="he-inline">לעילוי נשמת</span>, in honor of,
+      or in the merit of). It's a year-long zechus hanging on hundreds of walls. Investors interested
+      in backing the first major print run — we'd love to talk, too.
+    </p>
+    <a class="btn btn-gold" href="mailto:davidbassin12@gmail.com?subject=The%20Mitzvah%20Calendar%20%E2%80%94%20Sponsorship%20%2F%20investment&body=Name%3A%0AI'm%20interested%20in%3A%20(sponsoring%20calendars%20%2F%20investing)%0ANotes%3A">Talk to us about sponsoring</a>
+  </div>
+</section>
+
+<!-- ───────────────────────── FAQ ───────────────────────── -->
+<section class="faq" id="faq">
+  <div class="section-head reveal">
+    <p class="eyebrow"><span class="rule"></span>Questions</p>
+    <h2>FAQ</h2>
+  </div>
+  <div class="faq-list reveal">
+    <details>
+      <summary>When does it ship?</summary>
+      <p>The first printing ships in Elul 5786 (late summer 2026), so it's on your wall before Rosh Hashanah. Pre-order reservations are fulfilled first, in order of signup.</p>
+    </details>
+    <details>
+      <summary>How big is it, and what's it printed on?</summary>
+      <p>24″ × 36″ — genuinely big — on thick matte stock that takes pencil, pen, and marker beautifully. It ships rolled in a protective tube, never folded.</p>
+    </details>
+    <details>
+      <summary>Is it Hebrew, English, or both?</summary>
+      <p>Both. Every date carries its Hebrew and English day side by side, month names appear in both languages, and the Yamim Tovim are labeled the way you actually say them.</p>
+    </details>
+    <details>
+      <summary>Why 13 months?</summary>
+      <p>5787 is a shanah me'uberes — a Jewish leap year — so there are two Adars and 385 days. The calendar shows the real Jewish year, exactly as it runs: Rosh Hashanah to Rosh Hashanah.</p>
+    </details>
+    <details>
+      <summary>Do you take school or bulk orders?</summary>
+      <p>Yes — that's a channel we care about deeply. <a href="#schools">See the schools section</a> or email us with your quantity and we'll send bulk pricing.</p>
+    </details>
+    <details>
+      <summary>Can I sponsor calendars for others?</summary>
+      <p>Yes. Sponsors can underwrite calendars for a school or community, with a printed dedication line on the sponsored run. <a href="#sponsor">Details here.</a></p>
+    </details>
+    <details>
+      <summary>What does it cost?</summary>
+      <p>Founding pricing is announced when the first printing opens — and the pre-order list hears first, with a founders' discount. Reserving a spot costs nothing now.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ───────────────────────── Pre-order ───────────────────────── -->
+<section class="preorder" id="preorder">
+  <div class="preorder-inner reveal">
+    <p class="eyebrow"><span class="rule"></span>The first printing</p>
+    <h2>Reserve your wall for <em class="foil">5787.</em></h2>
+    <p class="preorder-lede">No payment now. When the first printing opens, the list orders first — at the founding price.</p>
+    <form class="preorder-form" id="preorder-form">
+      <div class="field">
+        <label for="pf-name">Name</label>
+        <input id="pf-name" name="name" type="text" autocomplete="name" required placeholder="Your name">
+      </div>
+      <div class="field">
+        <label for="pf-email">Email</label>
+        <input id="pf-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com">
+      </div>
+      <div class="field">
+        <label for="pf-qty">How many?</label>
+        <select id="pf-qty" name="qty">
+          <option>1 calendar</option>
+          <option>2–4 calendars</option>
+          <option>5+ — family / office</option>
+          <option>School / bulk order</option>
+        </select>
+      </div>
+      <button class="btn btn-gold btn-wide" type="submit">Join the pre-order list</button>
+      <p class="form-note" id="form-note">This opens an email to us with your reservation — one tap to send.</p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- ───────────────────────── Footer ───────────────────────── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="brand-mark" aria-hidden="true">✦</span> The Mitzvah Calendar
+      <p>The whole Jewish year, one wall.<br>5787 · Sept 2026 – Sept 2027</p>
+    </div>
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="#calendar">The Calendar</a>
+      <a href="#schools">For Schools</a>
+      <a href="#sponsor">Sponsor</a>
+      <a href="#faq">FAQ</a>
+      <a href="mailto:davidbassin12@gmail.com">Contact</a>
+    </nav>
+    <p class="footer-fine">© 2026 The Mitzvah Calendar · Made with love before Rosh Hashanah 5787<br>
+    <span class="he-inline">לוח המצוות — תכננו את היהדות שלכם</span></p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
