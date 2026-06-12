@@ -1,158 +1,261 @@
 /* ════════════════════════════════════════════════════════════════
    THE MITZVAH CALENDAR — 5787
-   Poster mockup renderer + page interactions.
-   ════════════════════════════════════════════════════════════════ */
+   Year renderer (hero poster + full editorial calendar) + UI.
 
-/* ── Year 5787 data (verified) ─────────────────────────────────────
-   A shanah me'uberes (leap year), "shleimah" type: Cheshvan & Kislev
-   both 30 days → 13 months, 385 days.
+   Year 5787 is a shanah me'uberes (leap year), "shleimah" type:
+   Cheshvan & Kislev both 30 days → 13 months, 385 days.
    1 Tishrei 5787 = Shabbos, Sept 12 2026.
    Cross-checks: Pesach (15 Nissan) → Thu Apr 22 2027 ✓
                  1 Tishrei 5788 → Shabbos Oct 2 2027 ✓
                  no fast day falls on Shabbos ✓
    start: weekday of day 1 (0 = Sunday … 6 = Shabbos)
-   tov:   Yamim Tovim & yamim of simcha (gold)
-   fast:  fast days (pomegranate)                                     */
+   sec:   secular date of day 1 [year, month, day]
+   marks: day → { t: "yt" | "chm" | "fast" | "p", label }
+   ════════════════════════════════════════════════════════════════ */
 
 const MONTHS = [
-  { en: "Tishrei",  he: "תשרי",   sec: "Sep–Oct", days: 30, start: 6,
-    tov: [1, 2, 10, 15, 16, 17, 18, 19, 20, 21, 22, 23], fast: [3] },
-  { en: "Cheshvan", he: "חשון",   sec: "Oct–Nov", days: 30, start: 1,
-    tov: [], fast: [] },
-  { en: "Kislev",   he: "כסלו",   sec: "Nov–Dec", days: 30, start: 3,
-    tov: [25, 26, 27, 28, 29, 30], fast: [] },          // Chanukah begins
-  { en: "Teves",    he: "טבת",    sec: "Dec–Jan", days: 29, start: 5,
-    tov: [1, 2], fast: [10] },                          // Chanukah ends, Asarah B'Teves
-  { en: "Shvat",    he: "שבט",    sec: "Jan–Feb", days: 30, start: 6,
-    tov: [15], fast: [] },                              // Tu B'Shvat
-  { en: "Adar I",   he: "אדר א׳", sec: "Feb–Mar", days: 30, start: 1,
-    tov: [14], fast: [] },                              // Purim Katan
-  { en: "Adar II",  he: "אדר ב׳", sec: "Mar–Apr", days: 29, start: 3,
-    tov: [14, 15], fast: [13] },                        // Purim & Shushan Purim
-  { en: "Nissan",   he: "ניסן",   sec: "Apr–May", days: 30, start: 4,
-    tov: [15, 16, 17, 18, 19, 20, 21, 22], fast: [] },  // Pesach
-  { en: "Iyar",     he: "אייר",   sec: "May–Jun", days: 29, start: 6,
-    tov: [18], fast: [] },                              // Lag B'Omer
-  { en: "Sivan",    he: "סיון",   sec: "Jun–Jul", days: 30, start: 0,
-    tov: [6, 7], fast: [] },                            // Shavuos
-  { en: "Tammuz",   he: "תמוז",   sec: "Jul–Aug", days: 29, start: 2,
-    tov: [], fast: [17] },                              // 17 Tammuz
-  { en: "Av",       he: "אב",     sec: "Aug–Sep", days: 30, start: 3,
-    tov: [15], fast: [9] },                             // Tisha B'Av, Tu B'Av
-  { en: "Elul",     he: "אלול",   sec: "Sep–Oct", days: 29, start: 5,
-    tov: [], fast: [] },
+  { en: "Tishrei", he: "תשרי", days: 30, start: 6, sec: [2026, 9, 12],
+    marks: {
+      1: { t: "yt", label: "Rosh Hashanah" }, 2: { t: "yt", label: "Rosh Hashanah" },
+      3: { t: "fast", label: "Tzom Gedaliah" }, 10: { t: "yt", label: "Yom Kippur" },
+      15: { t: "yt", label: "Sukkos" }, 16: { t: "yt", label: "Sukkos" },
+      17: { t: "chm", label: "Chol Hamoed" }, 18: { t: "chm" }, 19: { t: "chm" }, 20: { t: "chm" },
+      21: { t: "chm", label: "Hoshana Rabbah" }, 22: { t: "yt", label: "Shmini Atzeres" },
+      23: { t: "yt", label: "Simchas Torah" },
+    } },
+  { en: "Cheshvan", he: "חשון", days: 30, start: 1, sec: [2026, 10, 12], marks: {} },
+  { en: "Kislev", he: "כסלו", days: 30, start: 3, sec: [2026, 11, 11],
+    marks: {
+      25: { t: "chm", label: "Chanukah" }, 26: { t: "chm" }, 27: { t: "chm" },
+      28: { t: "chm" }, 29: { t: "chm" }, 30: { t: "chm" },
+    } },
+  { en: "Teves", he: "טבת", days: 29, start: 5, sec: [2026, 12, 11],
+    marks: {
+      1: { t: "chm", label: "Chanukah" }, 2: { t: "chm" },
+      10: { t: "fast", label: "Asarah B'Teves" },
+    } },
+  { en: "Shvat", he: "שבט", days: 30, start: 6, sec: [2027, 1, 9],
+    marks: { 15: { t: "chm", label: "Tu B'Shvat" } } },
+  { en: "Adar I", he: "אדר א׳", days: 30, start: 1, sec: [2027, 2, 8],
+    marks: { 14: { t: "chm", label: "Purim Katan" } } },
+  { en: "Adar II", he: "אדר ב׳", days: 29, start: 3, sec: [2027, 3, 10],
+    marks: {
+      13: { t: "fast", label: "Taanis Esther" },
+      14: { t: "chm", label: "Purim" }, 15: { t: "chm", label: "Shushan Purim" },
+    } },
+  { en: "Nissan", he: "ניסן", days: 30, start: 4, sec: [2027, 4, 8],
+    marks: {
+      15: { t: "yt", label: "Pesach" }, 16: { t: "yt", label: "Pesach" },
+      17: { t: "chm", label: "Chol Hamoed" }, 18: { t: "chm" }, 19: { t: "chm" }, 20: { t: "chm" },
+      21: { t: "yt", label: "Shvi'i Pesach" }, 22: { t: "yt", label: "Achron Pesach" },
+    } },
+  { en: "Iyar", he: "אייר", days: 29, start: 6, sec: [2027, 5, 8],
+    marks: { 18: { t: "chm", label: "Lag B'Omer" } } },
+  { en: "Sivan", he: "סיון", days: 30, start: 0, sec: [2027, 6, 6],
+    marks: { 6: { t: "yt", label: "Shavuos" }, 7: { t: "yt", label: "Shavuos" } } },
+  { en: "Tammuz", he: "תמוז", days: 29, start: 2, sec: [2027, 7, 6],
+    marks: { 17: { t: "fast", label: "17 Tammuz" } } },
+  { en: "Av", he: "אב", days: 30, start: 3, sec: [2027, 8, 4],
+    marks: { 9: { t: "fast", label: "Tisha B'Av" }, 15: { t: "chm", label: "Tu B'Av" } } },
+  { en: "Elul", he: "אלול", days: 29, start: 5, sec: [2027, 9, 3],
+    marks: { 29: { t: "p", label: "Erev R״H 5788" } } },
 ];
 
-/* ── Render the poster's 13 months ── */
-function renderPoster() {
-  const grid = document.getElementById("poster-grid");
-  if (!grid) return;
+/* Hebrew day numerals 1–30, luach style */
+const HE_NUM = [
+  "א", "ב", "ג", "ד", "ה", "ו", "ז", "ח", "ט", "י",
+  "י״א", "י״ב", "י״ג", "י״ד", "ט״ו", "ט״ז", "י״ז", "י״ח", "י״ט", "כ",
+  "כ״א", "כ״ב", "כ״ג", "כ״ד", "כ״ה", "כ״ו", "כ״ז", "כ״ח", "כ״ט", "ל",
+];
 
+const SEC_ABBR = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+
+/* blue-pen goals written on real dates (month index, hebrew day) */
+const SCRAWLS = [
+  { m: 0, d: 2, text: "UMAN ✈" },
+  { m: 1, d: 11, text: "Kever Rochel" },
+  { m: 2, d: 25, text: "fly to EY ✈" },
+  { m: 7, d: 15, text: "whole fam seder!" },
+  { m: 9, d: 5, text: "SIYUM!" },
+  { m: 10, d: 3, text: "the Ohel" },
+];
+
+const isRoshChodesh = (mIdx, day) =>
+  (day === 1 && mIdx > 0) || day === 30;
+
+/* ── Full editorial calendar ─────────────────────────────────── */
+function renderYearGrid() {
+  const root = document.getElementById("year-grid");
+  if (!root) return;
   const frag = document.createDocumentFragment();
 
-  MONTHS.forEach((m) => {
-    const month = document.createElement("div");
+  MONTHS.forEach((m, mIdx) => {
+    const month = document.createElement("article");
     month.className = "month";
 
-    const name = document.createElement("div");
-    name.className = "m-name";
-    const enEl = document.createElement("span");
-    enEl.className = "m-en";
-    enEl.textContent = m.en;
-    const heEl = document.createElement("span");
-    heEl.className = "m-he";
-    heEl.textContent = m.he;
-    name.append(enEl, heEl);
-    month.appendChild(name);
+    const head = document.createElement("div");
+    head.className = "m-head";
+    const en = document.createElement("span");
+    en.className = "m-en";
+    en.textContent = m.en;
+    const he = document.createElement("span");
+    he.className = "m-he";
+    he.textContent = m.he;
+    head.append(en, he);
+    month.appendChild(head);
 
+    // secular range, e.g. "SEP 12 – OCT 11"
+    const first = new Date(m.sec[0], m.sec[1] - 1, m.sec[2]);
+    const last = new Date(m.sec[0], m.sec[1] - 1, m.sec[2] + m.days - 1);
     const sec = document.createElement("span");
     sec.className = "m-sec";
-    sec.textContent = m.sec;
+    sec.textContent =
+      `${SEC_ABBR[first.getMonth()]} ${first.getDate()} – ${SEC_ABBR[last.getMonth()]} ${last.getDate()}, ${last.getFullYear()}`;
     month.appendChild(sec);
 
-    const daysEl = document.createElement("div");
-    daysEl.className = "m-days";
+    const week = document.createElement("div");
+    week.className = "m-week";
+    ["S", "M", "T", "W", "T", "F"].forEach((w) => {
+      const s = document.createElement("span");
+      s.textContent = w;
+      week.appendChild(s);
+    });
+    const shb = document.createElement("span");
+    shb.className = "wk-shabbos";
+    shb.textContent = "שבת";
+    week.appendChild(shb);
+    month.appendChild(week);
 
-    // leading blanks so day 1 sits on its true weekday
+    const days = document.createElement("div");
+    days.className = "m-days";
+
     for (let i = 0; i < m.start; i++) {
-      const d = document.createElement("span");
-      d.className = "d empty";
-      daysEl.appendChild(d);
+      const c = document.createElement("div");
+      c.className = "cell empty";
+      days.appendChild(c);
     }
 
     for (let day = 1; day <= m.days; day++) {
-      const d = document.createElement("span");
+      const c = document.createElement("div");
       const weekday = (m.start + day - 1) % 7;
-      let cls = "d";
-      if (m.tov.includes(day))        cls += " tov";
-      else if (m.fast.includes(day))  cls += " fast";
-      else if (day === 1)             cls += " rc";       // Rosh Chodesh
-      else if (weekday === 6)         cls += " shabbos";  // Shabbos column
-      d.className = cls;
-      daysEl.appendChild(d);
+      const mark = m.marks[day];
+      let cls = "cell";
+      if (mark && mark.t !== "p") cls += ` ${mark.t}`;
+      else if (weekday === 6) cls += " shabbos";
+      if (isRoshChodesh(mIdx, day)) cls += " rc";
+      c.className = cls;
+
+      const hd = document.createElement("span");
+      hd.className = "hd";
+      hd.textContent = HE_NUM[day - 1];
+      c.appendChild(hd);
+
+      const secDate = new Date(m.sec[0], m.sec[1] - 1, m.sec[2] + day - 1);
+      const sd = document.createElement("span");
+      sd.className = "sd";
+      sd.textContent =
+        day === 1 || secDate.getDate() === 1
+          ? `${SEC_ABBR[secDate.getMonth()]} ${secDate.getDate()}`
+          : String(secDate.getDate());
+      c.appendChild(sd);
+
+      let title = `${day} ${m.en} · ${SEC_ABBR[secDate.getMonth()]} ${secDate.getDate()}, ${secDate.getFullYear()}`;
+      if (mark && mark.label) {
+        const tag = document.createElement("span");
+        tag.className = "tag";
+        tag.textContent = mark.label;
+        c.appendChild(tag);
+        title += ` — ${mark.label}`;
+      } else if (isRoshChodesh(mIdx, day)) {
+        title += " — Rosh Chodesh";
+      }
+      c.title = title;
+
+      const scrawl = SCRAWLS.find((s) => s.m === mIdx && s.d === day);
+      if (scrawl) {
+        const pen = document.createElement("span");
+        pen.className = "pen";
+        pen.textContent = scrawl.text;
+        c.appendChild(pen);
+      }
+
+      days.appendChild(c);
     }
 
-    month.appendChild(daysEl);
+    month.appendChild(days);
     frag.appendChild(month);
   });
 
-  // 13 months + this span-3 cell = 16 cells = a clean 4×4 grid
-  const goals = document.createElement("div");
-  goals.className = "goals-cell";
-  const gTitle = document.createElement("span");
-  gTitle.className = "g-title";
-  gTitle.textContent = "My mitzvos this year";
-  goals.appendChild(gTitle);
-  [
-    { text: " Uman — Rosh Hashanah", done: true },
-    { text: " Start Daf Yomi", done: true },
-    { text: "Eretz Yisrael — Chanukah ✈", done: false },
-    { text: "Make a siyum by Shavuos", done: false },
-  ].forEach((g) => {
-    const line = document.createElement("span");
-    if (g.done) {
-      line.className = "done";
-      const check = document.createElement("span");
-      check.className = "check";
-      check.textContent = "✓";
-      line.appendChild(check);
+  root.appendChild(frag);
+}
+
+/* ── Hero poster (compact product shot) ──────────────────────── */
+function renderHeroPoster() {
+  const root = document.getElementById("hero-poster");
+  if (!root) return;
+
+  const head = document.createElement("div");
+  head.className = "hp-head";
+  const t = document.createElement("span");
+  t.className = "hp-title";
+  t.textContent = "The Mitzvah Calendar";
+  const y = document.createElement("span");
+  y.className = "hp-year";
+  y.textContent = "5787";
+  head.append(t, y);
+  root.appendChild(head);
+
+  const grid = document.createElement("div");
+  grid.className = "hp-grid";
+
+  MONTHS.forEach((m, mIdx) => {
+    const month = document.createElement("div");
+    month.className = "hp-month";
+
+    const name = document.createElement("div");
+    name.className = "hp-m";
+    const en = document.createElement("span");
+    en.textContent = m.en;
+    const he = document.createElement("span");
+    he.className = "he";
+    he.textContent = m.he;
+    name.append(en, he);
+    month.appendChild(name);
+
+    const days = document.createElement("div");
+    days.className = "hp-days";
+    for (let i = 0; i < m.start; i++) {
+      const d = document.createElement("span");
+      d.className = "hp-d e";
+      days.appendChild(d);
     }
-    line.appendChild(document.createTextNode(g.text));
+    for (let day = 1; day <= m.days; day++) {
+      const d = document.createElement("span");
+      const weekday = (m.start + day - 1) % 7;
+      const mark = m.marks[day];
+      let cls = "hp-d";
+      if (mark && (mark.t === "yt" || mark.t === "chm")) cls += " t";
+      else if (mark && mark.t === "fast") cls += " f";
+      else if (isRoshChodesh(mIdx, day)) cls += " r";
+      else if (weekday === 6) cls += " s";
+      d.className = cls;
+      days.appendChild(d);
+    }
+    month.appendChild(days);
+    grid.appendChild(month);
+  });
+
+  // 13 months + span-3 goals box = clean 4×4
+  const goals = document.createElement("div");
+  goals.className = "hp-goals";
+  ["✓ Uman — Rosh Hashanah", "✓ start Daf Yomi", "Eretz Yisrael — Chanukah ✈", "siyum by Shavuos"].forEach((g) => {
+    const line = document.createElement("span");
+    line.textContent = g;
     goals.appendChild(line);
   });
-  frag.appendChild(goals);
+  grid.appendChild(goals);
 
-  grid.appendChild(frag);
-}
-
-/* ── Scroll-triggered reveals ── */
-function setupReveals() {
-  const els = document.querySelectorAll(".reveal");
-  if (!("IntersectionObserver" in window)) {
-    els.forEach((el) => el.classList.add("in"));
-    return;
-  }
-  const io = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add("in");
-          io.unobserve(e.target);
-        }
-      });
-    },
-    { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
-  );
-  els.forEach((el) => io.observe(el));
-}
-
-/* ── Seamless marquee (duplicate content, scroll -50%) ── */
-function setupMarquee() {
-  const track = document.getElementById("marquee-track");
-  if (!track) return;
-  Array.from(track.children).forEach((child) =>
-    track.appendChild(child.cloneNode(true))
-  );
+  root.appendChild(grid);
 }
 
 /* ── Mobile nav ── */
@@ -172,8 +275,8 @@ function setupNav() {
   );
 }
 
-/* ── Pre-order form → composes an email (no backend needed on GitHub
-      Pages). Swap for Formspree/Shopify later without touching HTML. ── */
+/* ── Pre-order form → composes an email (no backend on GitHub
+      Pages). Swap for Formspree/Shopify later without HTML changes. ── */
 function setupForm() {
   const form = document.getElementById("preorder-form");
   const note = document.getElementById("form-note");
@@ -188,22 +291,19 @@ function setupForm() {
     const subject = encodeURIComponent("Mitzvah Calendar — pre-order reservation");
     const body = encodeURIComponent(
       `Please reserve me a spot in the first printing.\n\n` +
-      `Name: ${name}\nEmail: ${email}\nQuantity: ${qty}\n\n(Sent from themitzvahcalendar pre-order page)`
+      `Name: ${name}\nEmail: ${email}\nQuantity: ${qty}\n\n(Sent from the pre-order page)`
     );
-    window.location.href =
-      `mailto:davidbassin12@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:davidbassin12@gmail.com?subject=${subject}&body=${body}`;
 
     if (note) {
-      note.textContent =
-        "Your email app just opened with the reservation — hit send and you're on the list. ✦";
+      note.textContent = "Your email app just opened with the reservation — hit send and you're on the list.";
     }
   });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  renderPoster();
-  setupReveals();
-  setupMarquee();
+  renderHeroPoster();
+  renderYearGrid();
   setupNav();
   setupForm();
 });
